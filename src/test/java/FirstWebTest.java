@@ -20,7 +20,7 @@ public class FirstWebTest {
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        sleep(2000);
+        //sleep(2000);
 
         driver.get(url);
 
