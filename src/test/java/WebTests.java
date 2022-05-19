@@ -36,6 +36,7 @@ public class WebTests {
         Assert.assertEquals(actualResult, expectedResult);
         driver.quit();
     }
+
     //--------------------------------------------------------------------------
     //TC_11_02
     //Steps:
@@ -71,6 +72,7 @@ public class WebTests {
         Assert.assertEquals(actualResult, expectedResult);
         driver.quit();
     }
+
     //--------------------------------------------------------------------------
     //TC_11_03
     //Steps:
@@ -115,6 +117,7 @@ public class WebTests {
         Assert.assertEquals(actualResult, expectedResult);
         driver.quit();
     }
+
     //--------------------------------------------------------------------------
     //TC_11_04
     //1. Open the website on the page http://www.99-bottles-of-beer.net/abc.html
@@ -149,6 +152,7 @@ public class WebTests {
 
         driver.quit();
     }
+
     //--------------------------------------------------------------------------
     //TC_11_05
     //Steps:
@@ -212,19 +216,293 @@ public class WebTests {
         driver.quit();
     }
     //--------------------------------------------------------------------------
+    //TC_11_06
+
+    //--------------------------------------------------------------------------
     //TC_11_07
+    //    Подтвердите, что если на странице по ссылке
+    //    http://www.99-bottles-of-beer.net/submitnewlanguage.html ,
+    //    пользователь нажмет кнопку Submit Language,  не заполнив информацию
+    //    в обязательных полях, будет показана ошибка
+    //Error: Precondition failed - Incomplete Input.
+    //Шаги:
+    //1. Открыть вебсайт на странице
+    //2. Нажать на кнопку Submit Language
+    //3. Подтвердить, что на странице показана ошибка
+    //4. Подтвердить, что текст ошибки соответствует ожидаемому
+    //5. Закрыть браузер
+    @Test
+    public void testErrorOfSubmitLanguage() throws InterruptedException {
 
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+        String expectedResult = "Error: Precondition failed - Incomplete Input.";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+        WebElement submitLanguage = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']//div[@id='main']/form[@id='addlanguage']/p/input[@name='submitlanguage']"
+                )
+        );
+        submitLanguage.click();
+
+        WebElement error = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']/div[@id='main']/p/b/u"
+                )
+        );
+        error.getText();
+
+        WebElement textOferror = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']/div[@id='main']/p[contains(text(), ' Precondition failed - Incomplete Input.')]"
+                )
+        );
+
+        String actualResult = textOferror.getText();
+        sleep(1000);
+        Assert.assertEquals(actualResult, expectedResult);
+        driver.quit();
+    }
+    //--------------------------------------------------------------------------
+    //TC_11_08
+    //Precondition: Если на странице по ссылке
+    // http://www.99-bottles-of-beer.net/submitnewlanguage.html ,
+    // пользователь нажмет кнопку Submit Language,
+    // не заполнив информацию в обязательных полях,
+    // будет показана ошибка с текстом
+    //Error: Precondition failed - Incomplete Input.
+    //Подтвертите, что в тексте ошибки слова Error, Precondition,
+    // Incomplete и Input написаны с большой буквы, а слово failed  написано
+    // с маленькой буквы.
+    //Так же подтвердите, что в тексте ошибки содержатся знаки :, -  и .
+    //Шаги:
+    //1. Открыть вебсайт на странице
+    //2. Нажать на кнопку Submit Language
+    //3. Считать текст ошибки
+    //4. Подтвердить requirenments
+    //5. Закрыть браузер
+    @Test
+    public void testTextOfErrorOfSubmitLanguage() throws InterruptedException {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+        String expectedResult = "Error: Precondition failed - Incomplete Input.";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+        WebElement submitLanguage = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']//div[@id='main']/form[@id='addlanguage']/p/input[@name='submitlanguage']"
+                )
+        );
+        submitLanguage.click();
+
+        WebElement error = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']/div[@id='main']/p/b/u"
+                )
+        );
+        error.getText();
+
+        WebElement textOferror = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']/div[@id='main']/p[contains(text(), ' Precondition failed - Incomplete Input.')]"
+                )
+        );
+
+        String actualResult = textOferror.getText();
+        sleep(1000);
+        Assert.assertEquals(actualResult, expectedResult);
+
+        for (int i = 0; i < actualResult.length(); i++) {
+            if (actualResult.charAt(i) == 'E' && actualResult.charAt(i) == 'P'
+                    && actualResult.charAt(i) == 'f'
+                    && actualResult.charAt(i) == 'I'
+                    && actualResult.charAt(i) == ':'
+                    && actualResult.charAt(i) == '-'
+                    && actualResult.charAt(i) == '.') {
+            }
+            driver.quit();
+        }
+    }
+    //--------------------------------------------------------------------------
+    //TC_11_09
+    //    Подтвердите, что на странице по ссылке
+    //    http://www.99-bottles-of-beer.net/submitnewlanguage.html в первом пункте
+    //    списка пользователь видит текст
+    //IMPORTANT: Take your time! The more carefully you fill out this form
+    // (especially the language name and description), the easier it will be for
+    // us and the faster your language will show up on this page. We don't have the
+    // time to mess around with fixing your descriptions etc. Thanks for your
+    // understanding.
+    //Шаги:
+    //1. Открыть вебсайт на странице
+    //2. Считать текст
+    //3. Подтвердить, что текст соответствует ожидаемому
+    //4. Закрыть браузер
+    @Test
+    public void testTextOfImportant() throws InterruptedException {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+        String expectedResult = "IMPORTANT: Take your time! The more " +
+                "carefully you fill out this form (especially the language" +
+                " name and description), the easier it will be for us and the" +
+                " faster your language will show up on this page. We don't" +
+                " have the time to mess around with fixing your descriptions " +
+                "etc. Thanks for your understanding.";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+        WebElement important = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']/div[@id='main']/ul/li[position()=1]"
+                )
+        );
+        important.getText();
+        String actualResult = important.getText();
+        sleep(1000);
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
+    //--------------------------------------------------------------------------
+    //TC_11_10
+    //Подтвердите, что нажав на пункт меню Browse Languages, пользователь
+    // увидит таблицу со следующими названиями для первого и второго столбцов:
+    //Language
+    //Author
+    //Шаги:
+    //1. Открыть вебсайт на базовой странице http://www.99-bottles-of-beer.net/
+    //2. Нажать на пункт меню Browse Languages
+    //3. Считать названия первого и второго столбцов таблицы
+    //3. Подтвердить, что названия соответствует ожидаемым
+    //4. Закрыть браузер
+    @Test
+    public void testNameOfСolumns() throws InterruptedException {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String expectedResultOne= "Language";
+        String expectedResultTwo= "Author";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+        sleep(1000);
+
+        WebElement menuBrowseLanguages = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']/div[@id='navigation']" +
+                                "/ul[@id='menu']/li/a[@href='/abc.html']"
+                )
+        );
+
+        menuBrowseLanguages.click();
+        sleep(1000);
+
+        WebElement nameOfFirstColumn = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']/div[@id='main']" +
+                        "/table[@id='category']/tbody/tr/th[position()=1]"
+                )
+        );
+        nameOfFirstColumn.getText();
+
+        WebElement nameOfSecondColumn = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']/div[@id='main']" +
+                        "/table[@id='category']/tbody/tr/th[position()=2]"
+                )
+        );
+        nameOfSecondColumn.getText();
+
+        String actualResultOne = nameOfFirstColumn.getText();
+        sleep(1000);
+        Assert.assertEquals(actualResultOne, expectedResultOne);
+
+        String actualResultTwo = nameOfSecondColumn.getText();
+        sleep(1000);
+        Assert.assertEquals(actualResultTwo, expectedResultTwo);
+
+        driver.quit();
+    }
+    //--------------------------------------------------------------------------
     //TC_11_11
+    //Подтвердите, что на странице по базовой ссылке  пользователь НЕ увидит
+    // новые комментарии, если нажмет на пункты меню Top List → New Comments
+    //Шаги:
+    //1. Открыть вебсайт на базовой странице http://www.99-bottles-of-beer.net/
+    //2. Нажать на пункт меню Top List
+    //3. Нажать на пункт подменю New Comments
+    //4. Считать текст {LIST}
+    //5. Подтвердить, что текст соответствует ожидаемому
+    @Test
+    public void testNothingnothingIsVisible() throws InterruptedException {
 
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String expectedResult = "{LIST}";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+        WebElement h1 = driver.findElement(
+                By.xpath(
+                        ""
+                )
+        );
+        String actualResult = h1.getText();
+        sleep(1000);
+        Assert.assertEquals(actualResult, expectedResult);
+        driver.quit();
+    }
+    //--------------------------------------------------------------------------
     //TC_11_12
+    //Подтвердите, что на странице по ссылке
+    // http://www.99-bottles-of-beer.net/submitnewlanguage.html пользователь
+    // видит предупреждение IMPORTANT:, написанное белыми буквами bold шрифтом
+    // на красном фоне, и что все буквы - capital
+    //Шаги:
+    //1. Открыть вебсайт на странице http://www.99-bottles-of-beer.net/submitnewlanguage.html
+    //2. Считать слово IMPORTANT: из списка
+    //3. Подтвердить requirenments
+    //4. Закрыть браузер
+    @Test
+    public void testWordImportan() throws InterruptedException {
 
-    //TC_11_13
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+        String expectedResult = "IMPORTANT:";
 
-    //TC_11_14
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
 
-    //TC_11_15
-
-    //TC_11_21
-
-
+        driver.get(url);
+        WebElement h1 = driver.findElement(
+                By.xpath(
+                        ""
+                )
+        );
+        String actualResult = h1.getText();
+        sleep(1000);
+        Assert.assertEquals(actualResult, expectedResult);
+        driver.quit();
+    }
 }
