@@ -203,6 +203,7 @@ public class WebTests {
 
         driver.quit();
     }
+
     //--------------------------------------------------------------------------
     //TC_11_06+
     //Шаги:
@@ -242,8 +243,9 @@ public class WebTests {
 
         driver.quit();
     }
+
     //--------------------------------------------------------------------------
-    //TC_11_07
+    //TC_11_07+
     //    Подтвердите, что если на странице по ссылке
     //    http://www.99-bottles-of-beer.net/submitnewlanguage.html ,
     //    пользователь нажмет кнопку Submit Language,  не заполнив информацию
@@ -280,20 +282,22 @@ public class WebTests {
         );
         error.getText();
 
-        WebElement textOferror = driver.findElement(
+        WebElement textOfError = driver.findElement(
                 By.xpath(
                         "//body/div[@id='wrap']/div[@id='main']/p[contains(text(), ' Precondition failed - Incomplete Input.')]"
                 )
         );
 
-        String actualResult = textOferror.getText();
+        String actualResult = textOfError.getText();
         sleep(1000);
+
         Assert.assertEquals(actualResult, expectedResult);
+
         driver.quit();
     }
 
     //--------------------------------------------------------------------------
-    //TC_11_08
+    //TC_11_08+/-
     //Precondition: Если на странице по ссылке
     // http://www.99-bottles-of-beer.net/submitnewlanguage.html ,
     // пользователь нажмет кнопку Submit Language,
@@ -343,7 +347,6 @@ public class WebTests {
 
         String actualResult = textOferror.getText();
         sleep(1000);
-        Assert.assertEquals(actualResult, expectedResult);
 
         for (int i = 0; i < actualResult.length(); i++) {
             if (actualResult.charAt(i) == 'E' && actualResult.charAt(i) == 'P'
@@ -353,11 +356,13 @@ public class WebTests {
                     && actualResult.charAt(i) == '-'
                     && actualResult.charAt(i) == '.') {
             }
-            driver.quit();
+            Assert.assertEquals(actualResult, expectedResult);
         }
+        driver.quit();
     }
+
     //--------------------------------------------------------------------------
-    //TC_11_09
+    //TC_11_09+
     //    Подтвердите, что на странице по ссылке
     //    http://www.99-bottles-of-beer.net/submitnewlanguage.html в первом пункте
     //    списка пользователь видит текст
@@ -392,16 +397,16 @@ public class WebTests {
                         "//body/div[@id='wrap']/div[@id='main']/ul/li[position()=1]"
                 )
         );
-        important.getText();
         String actualResult = important.getText();
         sleep(1000);
+
         Assert.assertEquals(actualResult, expectedResult);
 
         driver.quit();
     }
 
     //--------------------------------------------------------------------------
-    //TC_11_10
+    //TC_11_10+
     //Подтвердите, что нажав на пункт меню Browse Languages, пользователь
     // увидит таблицу со следующими названиями для первого и второго столбцов:
     //Language
@@ -434,7 +439,6 @@ public class WebTests {
         );
 
         menuBrowseLanguages.click();
-        sleep(1000);
 
         WebElement nameOfFirstColumn = driver.findElement(
                 By.xpath(
@@ -442,7 +446,9 @@ public class WebTests {
                                 "/table[@id='category']/tbody/tr/th[position()=1]"
                 )
         );
-        nameOfFirstColumn.getText();
+        String actualResultOne = nameOfFirstColumn.getText();
+        sleep(600);
+        Assert.assertEquals(actualResultOne, expectedResultOne);
 
         WebElement nameOfSecondColumn = driver.findElement(
                 By.xpath(
@@ -450,48 +456,57 @@ public class WebTests {
                                 "/table[@id='category']/tbody/tr/th[position()=2]"
                 )
         );
-        nameOfSecondColumn.getText();
-
-        String actualResultOne = nameOfFirstColumn.getText();
-        sleep(1000);
-        Assert.assertEquals(actualResultOne, expectedResultOne);
 
         String actualResultTwo = nameOfSecondColumn.getText();
-        sleep(1000);
+        sleep(600);
         Assert.assertEquals(actualResultTwo, expectedResultTwo);
 
         driver.quit();
     }
 
     //--------------------------------------------------------------------------
-    //TC_11_11
+    //TC_11_11+
     //Подтвердите, что на странице по базовой ссылке  пользователь НЕ увидит
     // новые комментарии, если нажмет на пункты меню Top List → New Comments
     //Шаги:
     //1. Открыть вебсайт на базовой странице http://www.99-bottles-of-beer.net/
     //2. Нажать на пункт меню Top List
     //3. Нажать на пункт подменю New Comments
-    //4. Считать текст {LIST}
-    //5. Подтвердить, что текст соответствует ожидаемому
+    //4. Считать текст
+    //5. Подтвердить, что текста нет
     @Test
     public void testNothingnothingIsVisible() throws InterruptedException {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String expectedResult = "{LIST}";
+        String expectedResult = "";
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
         driver.get(URL);
-        WebElement h1 = driver.findElement(
+
+        driver.findElement(By.xpath(
+                        "//ul/li/a[@href='/toplist.html']"
+                )
+        ).click();
+
+        driver.findElement(
                 By.xpath(
-                        ""
+                        "//ul[@id='submenu']/li/a[@href='./newcomments.html']"
+                )
+        ).click();
+
+        WebElement list = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']/div[@id='main']/p"
                 )
         );
-        String actualResult = h1.getText();
-        sleep(1000);
+
+        String actualResult = list.getText();;
+
         Assert.assertEquals(actualResult, expectedResult);
+
         driver.quit();
     }
 
@@ -517,14 +532,21 @@ public class WebTests {
         WebDriver driver = new ChromeDriver();
 
         driver.get(URL_SUBMIT_NEW_LANGUAGE);
-        WebElement h1 = driver.findElement(
+
+        WebElement important = driver.findElement(
                 By.xpath(
-                        ""
+                        "//div[@id='main']/ul/li/span/b"
                 )
         );
-        String actualResult = h1.getText();
-        sleep(1000);
-        Assert.assertEquals(actualResult, expectedResult);
-        driver.quit();
+        important.getText();
+
+
+        //background-color:red; color: white
+
+//        String actualResult = h1.getText();
+//        sleep(1000);
+//        Assert.assertEquals(actualResult, expectedResult);
+//        driver.quit();
+
     }
 }
