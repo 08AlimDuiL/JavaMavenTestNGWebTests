@@ -511,7 +511,7 @@ public class WebTests {
     }
 
     //--------------------------------------------------------------------------
-    //TC_11_12
+    //TC_11_12 Доделать!!!!!
     //Подтвердите, что на странице по ссылке
     // http://www.99-bottles-of-beer.net/submitnewlanguage.html пользователь
     // видит предупреждение IMPORTANT:, написанное белыми буквами bold шрифтом
@@ -522,7 +522,7 @@ public class WebTests {
     //3. Подтвердить requirenments
     //4. Закрыть браузер
     @Test
-    public void testWordImportan() throws InterruptedException {
+    public void testStyleOfWordImportant() throws InterruptedException {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
@@ -538,15 +538,15 @@ public class WebTests {
                         "//div[@id='main']/ul/li/span/b"
                 )
         );
-        important.getText();
 
+       String actualResult =  important.getText();
 
-        //background-color:red; color: white
+       if(driver.findElement(By.xpath("//div[@id='main']/ul/li/span"))
+               .getAttribute("style")=="background-color:red; color: white"){
 
-//        String actualResult = h1.getText();
-//        sleep(1000);
-//        Assert.assertEquals(actualResult, expectedResult);
-//        driver.quit();
+           Assert.assertEquals(actualResult, expectedResult);
+       }
 
+       driver.quit();
     }
 }
