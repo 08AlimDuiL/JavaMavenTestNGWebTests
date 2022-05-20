@@ -8,7 +8,12 @@ import org.testng.annotations.Test;
 import static java.lang.Thread.sleep;
 
 public class WebTests {
-    //TC_11_01
+
+    private static final String URL = "http://www.99-bottles-of-beer.net/";
+    private static final String URL_SUBMIT_NEW_LANGUAGE =
+            "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+
+    //TC_11_01+
     //Steps:
     //1. Open the website on the base page https://www.99-bottles-of-beer.net/
     //2. Read the title in the upper right corner
@@ -19,13 +24,13 @@ public class WebTests {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String url = "http://www.99-bottles-of-beer.net/";
         String expectedResult = "99 Bottles of Beer";
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        driver.get(url);
+        driver.get(URL);
+
         WebElement h1 = driver.findElement(
                 By.xpath(
                         "//body/div[@id='wrap']/div[@id='header']/h1"
@@ -33,12 +38,14 @@ public class WebTests {
         );
         String actualResult = h1.getText();
         sleep(1000);
+
         Assert.assertEquals(actualResult, expectedResult);
+
         driver.quit();
     }
 
     //--------------------------------------------------------------------------
-    //TC_11_02
+    //TC_11_02+
     //Steps:
     //1. Open the website on the base page https://www.99-bottles-of-beer.net/
     //2. Read the name of the last menu item
@@ -49,77 +56,66 @@ public class WebTests {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String url = "http://www.99-bottles-of-beer.net/";
-        String expectedResult = "SUBMIt NEW LANGUAGE";
+        String expectedResult = ("SUBMIt NeW LANGUAGE").toLowerCase();
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        driver.get(url);
+        driver.get(URL);
+
         WebElement menuLastElement = driver.findElement(
                 By.xpath(
-                        "//body/div[@id='wrap']/div[@id='navigation']/ul/li" +
-                                "/a[contains(text(), 'Submit new Language')]"
+                        "//body/div[@id='wrap']/div[@id='navigation']/ul/li/a[contains(text(), 'Submit new Language')]"
                 )
         );
-
-        sleep(1000);
-        String actualResult = menuLastElement.getText();
-
-        expectedResult = expectedResult.toLowerCase();
-        actualResult = actualResult.toLowerCase();
+        String actualResult = menuLastElement.getText().toLowerCase();
 
         Assert.assertEquals(actualResult, expectedResult);
+
         driver.quit();
     }
 
     //--------------------------------------------------------------------------
-    //TC_11_03
+    //TC_11_03+
     //Steps:
     //1. Open the website on the base page https://www.99-bottles-of-beer.net/
     //2. Click on the menu item Submit new Language
     //3. Read the title of the subtitle of the last menu item
-    //4. Verify that the title of the subtitle of the last menu item corresponds to the expected
+    //4. Verify that the title of the subtitle of the last menu item corresponds
+    // to the expected
     //5. Close the browser
     @Test
     public void testSubtitleNewLanguage() throws InterruptedException {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String url = "http://www.99-bottles-of-beer.net/";
-        String expectedResult = "Submit New Language";
+        String expectedResult = ("Submit New Language").toLowerCase();
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        driver.get(url);
+        driver.get(URL);
         WebElement menuLastElement = driver.findElement(
                 By.xpath(
-                        "//body/div[@id='wrap']/div[@id='navigation']/ul/li" +
-                                "/a[contains(text(), 'Submit new Language')]"
+                        "//body/div[@id='wrap']/div[@id='navigation']/ul/li/a[contains(text(), 'Submit new Language')]"
                 )
         );
         menuLastElement.click();
-        sleep(1000);
 
         WebElement nameOfSubtitle = driver.findElement(
                 By.xpath(
-                        "//body/div[@id='wrap']/div[@id='navigation']" +
-                                "/ul[@id='submenu']/li" +
-                                "/a[contains(text(), 'Submit New Language')]"
+                        "//body/div[@id='wrap']/div[@id='navigation']/ul[@id='submenu']/li/a[contains(text(), 'Submit New Language')]"
                 )
         );
-        String actualResult = nameOfSubtitle.getText();
-
-        expectedResult = expectedResult.toLowerCase();
-        actualResult = actualResult.toLowerCase();
+        String actualResult = nameOfSubtitle.getText().toLowerCase();
 
         Assert.assertEquals(actualResult, expectedResult);
+
         driver.quit();
     }
 
     //--------------------------------------------------------------------------
-    //TC_11_04
+    //TC_11_04+
     //1. Open the website on the page http://www.99-bottles-of-beer.net/abc.html
     //2. Read the title of the first subtitle
     //3. Verify that the name of the submenu corresponds to the expected
@@ -129,21 +125,18 @@ public class WebTests {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String url = "https://www.99-bottles-of-beer.net/abc.html";
         String expectedResult = "0-9";
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        driver.get(url);
+        driver.get("https://www.99-bottles-of-beer.net/abc.html");
 
         WebElement firstSubmenuOfBrowseLanguages = driver.findElement(
                 By.xpath(
                         "//body/div[@id='wrap']/div[@id='navigation']/ul[@id='submenu']/li/a"
                 )
         );
-
-        sleep(1000);
 
         String actualResult = firstSubmenuOfBrowseLanguages.getText();
         sleep(1000);
@@ -154,7 +147,7 @@ public class WebTests {
     }
 
     //--------------------------------------------------------------------------
-    //TC_11_05
+    //TC_11_05 ???? Можно сделать по другому????
     //Steps:
     //1.  Open the website on the base page https://www.99-bottles-of-beer.net/
     //2.  Find the Team subtitle on the page
@@ -170,7 +163,6 @@ public class WebTests {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String url = "http://www.99-bottles-of-beer.net/";
         String expectedResultOne = "Oliver Schade";
         String expectedResultTwo = "Gregor Scheithauer";
         String expectedResultThree = "Stefan Scheler";
@@ -178,16 +170,15 @@ public class WebTests {
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        driver.get(url);
+        driver.get(URL);
 
-        WebElement SubtitleTeam = driver.findElement(
+        WebElement subtitleTeam = driver.findElement(
                 By.xpath(
-                        "//body/div[@id='wrap']/div[@id='navigation']" +
-                                "/ul[@id='submenu']/li/a[@href='team.html']"
-                ));
+                        "//body/div[@id='wrap']/div[@id='navigation']/ul[@id='submenu']/li/a[@href='team.html']"
+                )
+        );
+        subtitleTeam.click();
         sleep(1000);
-        SubtitleTeam.click();
-        sleep(3000);
 
         WebElement teamOFSiteCreatorsOne = driver.findElement(
                 By.xpath(
@@ -195,7 +186,6 @@ public class WebTests {
                 ));
         String actualResultOne = teamOFSiteCreatorsOne.getText();
         Assert.assertEquals(actualResultOne, expectedResultOne);
-        sleep(1000);
 
         WebElement teamOFSiteCreatorsTwo = driver.findElement(
                 By.xpath(
@@ -203,7 +193,6 @@ public class WebTests {
                 ));
         String actualResultTwo = teamOFSiteCreatorsTwo.getText();
         Assert.assertEquals(actualResultTwo, expectedResultTwo);
-        sleep(1000);
 
         WebElement teamOFSiteCreatorsThree = driver.findElement(
                 By.xpath(
@@ -211,13 +200,48 @@ public class WebTests {
                 ));
         String actualResultThree = teamOFSiteCreatorsThree.getText();
         Assert.assertEquals(actualResultThree, expectedResultThree);
-        sleep(1000);
 
         driver.quit();
     }
     //--------------------------------------------------------------------------
-    //TC_11_06
+    //TC_11_06+
+    //Шаги:
+    //1. Открыть вебсайт на странице
+    //2. Найти кнопку Search Languages
+    //3. Нажать на кнопку Search Languages
+    //4. Найти название поля для ввода языка
+    //5. Подтвердить, что поле для ввода соответствует ожидаемому "Search for:"
+    //6. Закрыть браузер
+    @Test
+    public void test() throws InterruptedException {
 
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
+        String expectedResult = "Search for:";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(URL);
+
+        WebElement searchLanguages = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']/div[@id='navigation']/ul/li/a[@href='/search.html']"
+                )
+        );
+        searchLanguages.click();
+
+        WebElement searchFor = driver.findElement(
+                By.xpath(
+                        "//body/div[@id='wrap']/div[@id='main']/form/p/strong"
+                )
+        );
+        String actualResult = searchFor.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
     //--------------------------------------------------------------------------
     //TC_11_07
     //    Подтвердите, что если на странице по ссылке
@@ -236,13 +260,12 @@ public class WebTests {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
         String expectedResult = "Error: Precondition failed - Incomplete Input.";
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        driver.get(url);
+        driver.get(URL_SUBMIT_NEW_LANGUAGE);
         WebElement submitLanguage = driver.findElement(
                 By.xpath(
                         "//body/div[@id='wrap']//div[@id='main']/form[@id='addlanguage']/p/input[@name='submitlanguage']"
@@ -268,6 +291,7 @@ public class WebTests {
         Assert.assertEquals(actualResult, expectedResult);
         driver.quit();
     }
+
     //--------------------------------------------------------------------------
     //TC_11_08
     //Precondition: Если на странице по ссылке
@@ -291,13 +315,12 @@ public class WebTests {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
         String expectedResult = "Error: Precondition failed - Incomplete Input.";
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        driver.get(url);
+        driver.get(URL_SUBMIT_NEW_LANGUAGE);
         WebElement submitLanguage = driver.findElement(
                 By.xpath(
                         "//body/div[@id='wrap']//div[@id='main']/form[@id='addlanguage']/p/input[@name='submitlanguage']"
@@ -353,7 +376,6 @@ public class WebTests {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
         String expectedResult = "IMPORTANT: Take your time! The more " +
                 "carefully you fill out this form (especially the language" +
                 " name and description), the easier it will be for us and the" +
@@ -364,7 +386,7 @@ public class WebTests {
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        driver.get(url);
+        driver.get(URL_SUBMIT_NEW_LANGUAGE);
         WebElement important = driver.findElement(
                 By.xpath(
                         "//body/div[@id='wrap']/div[@id='main']/ul/li[position()=1]"
@@ -377,6 +399,7 @@ public class WebTests {
 
         driver.quit();
     }
+
     //--------------------------------------------------------------------------
     //TC_11_10
     //Подтвердите, что нажав на пункт меню Browse Languages, пользователь
@@ -394,14 +417,13 @@ public class WebTests {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String url = "http://www.99-bottles-of-beer.net/";
-        String expectedResultOne= "Language";
-        String expectedResultTwo= "Author";
+        String expectedResultOne = "Language";
+        String expectedResultTwo = "Author";
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        driver.get(url);
+        driver.get(URL);
         sleep(1000);
 
         WebElement menuBrowseLanguages = driver.findElement(
@@ -417,7 +439,7 @@ public class WebTests {
         WebElement nameOfFirstColumn = driver.findElement(
                 By.xpath(
                         "//body/div[@id='wrap']/div[@id='main']" +
-                        "/table[@id='category']/tbody/tr/th[position()=1]"
+                                "/table[@id='category']/tbody/tr/th[position()=1]"
                 )
         );
         nameOfFirstColumn.getText();
@@ -425,7 +447,7 @@ public class WebTests {
         WebElement nameOfSecondColumn = driver.findElement(
                 By.xpath(
                         "//body/div[@id='wrap']/div[@id='main']" +
-                        "/table[@id='category']/tbody/tr/th[position()=2]"
+                                "/table[@id='category']/tbody/tr/th[position()=2]"
                 )
         );
         nameOfSecondColumn.getText();
@@ -440,6 +462,7 @@ public class WebTests {
 
         driver.quit();
     }
+
     //--------------------------------------------------------------------------
     //TC_11_11
     //Подтвердите, что на странице по базовой ссылке  пользователь НЕ увидит
@@ -455,13 +478,12 @@ public class WebTests {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String url = "http://www.99-bottles-of-beer.net/";
         String expectedResult = "{LIST}";
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        driver.get(url);
+        driver.get(URL);
         WebElement h1 = driver.findElement(
                 By.xpath(
                         ""
@@ -472,6 +494,7 @@ public class WebTests {
         Assert.assertEquals(actualResult, expectedResult);
         driver.quit();
     }
+
     //--------------------------------------------------------------------------
     //TC_11_12
     //Подтвердите, что на странице по ссылке
@@ -488,13 +511,12 @@ public class WebTests {
 
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "F:\\QA\\Installer\\ChromeDriver\\chromedriver.exe";
-        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
         String expectedResult = "IMPORTANT:";
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
-        driver.get(url);
+        driver.get(URL_SUBMIT_NEW_LANGUAGE);
         WebElement h1 = driver.findElement(
                 By.xpath(
                         ""
